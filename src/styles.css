@@ -1,0 +1,218 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * FARRO design system — palette sampled from the miniature-kitchen film:
+ * flour, cream, wood, tomato, terracotta, olive, espresso.
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Farro semantic tokens */
+  --color-cream: var(--cream);
+  --color-flour: var(--flour);
+  --color-espresso: var(--espresso);
+  --color-toasted: var(--toasted);
+  --color-terracotta: var(--terracotta);
+  --color-olive: var(--olive);
+
+  --font-display: "Space Grotesk", system-ui, sans-serif;
+  --font-sans: "DM Sans", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.25rem;
+
+  --cream: oklch(0.916 0.031 85.5);
+  --flour: oklch(0.949 0.023 88);
+  --espresso: oklch(0.221 0.031 45);
+  --toasted: oklch(0.427 0.077 47);
+  --terracotta: oklch(0.507 0.13 33);
+  --olive: oklch(0.489 0.062 111);
+
+  --background: var(--cream);
+  --foreground: var(--espresso);
+  --card: var(--flour);
+  --card-foreground: var(--espresso);
+  --popover: var(--flour);
+  --popover-foreground: var(--espresso);
+  --primary: var(--terracotta);
+  --primary-foreground: var(--flour);
+  --secondary: var(--flour);
+  --secondary-foreground: var(--espresso);
+  --muted: oklch(0.895 0.028 85);
+  --muted-foreground: var(--toasted);
+  --accent: var(--terracotta);
+  --accent-foreground: var(--flour);
+  --destructive: oklch(0.507 0.16 28);
+  --destructive-foreground: var(--flour);
+  --border: oklch(0.82 0.035 70);
+  --input: oklch(0.82 0.035 70);
+  --ring: var(--terracotta);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+  }
+
+  ::selection {
+    background: var(--color-terracotta);
+    color: var(--color-flour);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-terracotta);
+    outline-offset: 3px;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+@utility label-xs {
+  font-family: var(--font-sans);
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+@utility band {
+  padding-inline: 1.5rem;
+  padding-block: 6rem;
+  @media (min-width: 768px) {
+    padding-inline: 3rem;
+    padding-block: 9rem;
+  }
+}
+
+@utility band-inner {
+  margin-inline: auto;
+  max-width: 1280px;
+}
+
+@utility pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 999px;
+  padding: 0.9rem 1.6rem;
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.3s ease;
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+/* Readable overlay text over film without heavy black boxes */
+@utility text-on-film {
+  text-shadow:
+    0 1px 24px color-mix(in oklab, var(--espresso) 55%, transparent),
+    0 1px 3px color-mix(in oklab, var(--espresso) 40%, transparent);
+}
+
+@utility film-veil {
+  background: radial-gradient(
+    120% 90% at var(--veil-x, 30%) 50%,
+    color-mix(in oklab, var(--espresso) 62%, transparent) 0%,
+    color-mix(in oklab, var(--espresso) 30%, transparent) 45%,
+    transparent 78%
+  );
+}
+
+@utility link-underline {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    height: 1px;
+    width: 100%;
+    transform: scaleX(0);
+    transform-origin: left;
+    background: currentColor;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  &:hover::after {
+    transform: scaleX(1);
+  }
+}
+
+@utility marquee-track {
+  animation: farro-marquee 38s linear infinite;
+  will-change: transform;
+}
+
+@keyframes farro-marquee {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+@keyframes farro-nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.6;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+@utility scroll-nudge {
+  animation: farro-nudge 2.2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track,
+  .scroll-nudge {
+    animation: none !important;
+  }
+}
